@@ -1,22 +1,6 @@
 {
-  "name": "nestjs-service-template",
-  "version": "1.0.0",
-  "description": "Template for new nestjs services",
-  "author": "alberthernandezdev@gmail.com",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/AlbertHernandez/nestjs-service-template/issues"
-  },
-  "homepage": "https://github.com/AlbertHernandez/nestjs-service-template#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AlbertHernandez/nestjs-service-template.git"
-  },
-  "keywords": [
-    "typescript",
-    "nestjs",
-    "template"
-  ],
+  "name": "music-streaming-services-playlist-history-backend",
+  "version": "0.1.0",
   "engines": {
     "node": ">=18.x",
     "npm": ">=9.x"
