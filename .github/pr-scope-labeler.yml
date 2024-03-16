@@ -26,7 +26,6 @@
       - any-glob-to-any-file:
           - .dockerignore
           - Dockerfile
-          - docker-compose.yml
           - .nvmrc
           - .swcrc
           - tsconfig.json
