@@ -17,7 +17,7 @@
       "@src/*": ["src/*"],
       "@core/*": ["src/core/*"],
       "@shared/*": ["src/shared/*"],
-      "@contexts/*": ["src/contexts/*"],
+      "@context/*": ["src/context/*"],
       "@tests/*": ["tests/*"]
     },
     "types": ["vitest/globals"]
