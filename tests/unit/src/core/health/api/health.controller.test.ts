@@ -1,15 +1,14 @@
 import { Logger } from "@nestjs/common";
+import { mock, MockProxy } from "vitest-mock-extended";
 
 import { HealthController } from "@core/health/api/health.controller";
 
-import { createMock, Mock } from "@tests/utils/mock";
-
 describe("HealthController", () => {
   let healthController: HealthController;
-  let logger: Mock<Logger>;
+  let logger: MockProxy<Logger>;
 
   beforeEach(() => {
-    logger = createMock<Logger>();
+    logger = mock<Logger>();
     healthController = new HealthController(logger);
   });
 

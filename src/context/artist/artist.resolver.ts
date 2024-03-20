@@ -1,33 +1,23 @@
-import { Inject, Logger } from "@nestjs/common";
-import { Args, Info, Query, Resolver } from "@nestjs/graphql";
+import { Args, Query, Resolver } from "@nestjs/graphql";
 import { plainToClass } from "class-transformer";
-import { GraphQLResolveInfo } from "graphql/type";
 
-import { BaseResolver } from "@core/resolver/base-resolver";
+import { ArtistService } from "@context/artist/artist.service";
+import { GetArtistArgs } from "@context/artist/dto/request/args/get-artist.args";
+import { GetArtistsArgs } from "@context/artist/dto/request/args/get-artists.args";
+import { ArtistResponse } from "@context/artist/dto/response/artist.object";
 
-import { ArtistRepository } from "@context/artist/artist.repository";
-import { ArtistsArgs } from "@context/artist/dto/artist.args";
-import { ArtistResponseDto } from "@context/artist/dto/artist-response-dto.object";
+@Resolver(() => ArtistResponse)
+export class ArtistResolver {
+  constructor(private readonly service: ArtistService) {}
 
-@Resolver(() => ArtistResponseDto)
-export class ArtistResolver extends BaseResolver {
-  constructor(
-    private readonly artistsService: ArtistRepository,
-    @Inject(Logger) private readonly logger: Logger,
-  ) {
-    super();
+  @Query(() => ArtistResponse)
+  async artist(@Args() args: GetArtistArgs): Promise<ArtistResponse> {
+    return plainToClass(ArtistResponse, await this.service.find(plainToClass(GetArtistArgs, args)));
   }
 
-  @Query(() => ArtistResponseDto)
-  async artist(@Info() graphQLResolveInfo: GraphQLResolveInfo, @Args("id") id: string): Promise<ArtistResponseDto> {
-    const artist = await this.artistsService.findOneById(this.globalIdToTableId(id, ArtistResponseDto.__typename));
-    this.logger.log(graphQLResolveInfo);
-    return plainToClass(ArtistResponseDto, artist);
-  }
-
-  @Query(() => [ArtistResponseDto])
-  async artists(@Args() artistsArgs: ArtistsArgs): Promise<ArtistResponseDto[]> {
-    const artists = await this.artistsService.findAll(artistsArgs);
-    return artists.map(artist => plainToClass(ArtistResponseDto, artist));
+  @Query(() => [ArtistResponse])
+  async artists(@Args() args: GetArtistsArgs): Promise<ArtistResponse[]> {
+    const entities = await this.service.findAll(args);
+    return entities.map(entity => plainToClass(ArtistResponse, entity));
   }
 }

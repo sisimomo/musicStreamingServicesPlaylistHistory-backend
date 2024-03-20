@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Artist {
+  id                          Int               @map("id") @id @default(autoincrement())
+  streamingService            streaming_service @map("streaming_service")
+  streamingServiceInternalId  String            @map("streaming_service_internal_id")
+  createdAt                   DateTime          @default(now())
+  updatedAt                   DateTime          @updatedAt @default(now())
+  name                        String            @map("name") @db.VarChar(256)
+  url                         String?           @map("url") @db.VarChar(2048)
+  artworkUrl                  String?           @map("artwork_url") @db.VarChar(2048)
+}
+
+enum streaming_service {
+  APPLE_MUSIC
+  SPOTIFY
+}

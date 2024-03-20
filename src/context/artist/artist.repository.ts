@@ -1,30 +1,26 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { eq } from "drizzle-orm";
-import { NodePgDatabase } from "drizzle-orm/node-postgres";
+import { Injectable } from "@nestjs/common";
+import { Artist } from "@prisma/client";
 
-import * as schema from "@src/drizzle/schema";
-import { Artist, artist } from "@src/drizzle/schema";
+import { PrismaService } from "@core/database/prisma.service";
 
-import { ArtistsArgs } from "@context/artist/dto/artist.args";
+import { GetArtistsArgs } from "@context/artist/dto/request/args/get-artists.args";
 
 @Injectable()
 export class ArtistRepository {
-  constructor(@Inject("db") private db: NodePgDatabase<typeof schema>) {}
+  constructor(private db: PrismaService) {}
 
-  async findOneById(id: number): Promise<Artist> {
-    const entity = await this.db.query.artist.findFirst({
-      where: eq(artist.id, id),
+  public async findById(id: number): Promise<Artist> {
+    return this.db.artist.findUniqueOrThrow({
+      where: {
+        id,
+      },
     });
-    if (!entity) {
-      throw new NotFoundException(id);
-    }
-    return entity;
   }
 
-  async findAll(artistsArgs: ArtistsArgs): Promise<Artist[]> {
-    return this.db.query.artist.findMany({
-      offset: artistsArgs.skip,
-      limit: artistsArgs.take,
+  public async findAll(artistsArgs: GetArtistsArgs): Promise<Artist[]> {
+    return this.db.artist.findMany({
+      skip: artistsArgs.skip,
+      take: artistsArgs.take,
     });
   }
 }
