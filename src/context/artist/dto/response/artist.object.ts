@@ -1,13 +1,13 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { GlobalId } from "@core/decorator/global-id";
+import { ToGlobalId } from "@core/decorator/to-global-id";
 
-@ObjectType(ArtistResponseDto.__typename)
-export class ArtistResponseDto {
+@ObjectType(ArtistResponse.__typename)
+export class ArtistResponse {
   static __typename: string = "Artist";
 
   @Field(() => ID)
-  @GlobalId(ArtistResponseDto.__typename)
+  @ToGlobalId(ArtistResponse.__typename)
   id!: string;
 
   @Field()
@@ -23,5 +23,5 @@ export class ArtistResponseDto {
   streamingService!: string;
 
   @Field()
-  streamingServiceId!: string;
+  streamingServiceInternalId!: string;
 }
