@@ -32,8 +32,10 @@ RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ".npmrc" && \
     npm install --save-optional \
         "@swc/core-linux-x64-gnu@1" \
         "@swc/core-linux-x64-musl@1" && \
-    prisma generate && \
     rm -f .npmrc
+
+RUN npm install -g prisma
+RUN prisma generate
 
 COPY tsconfig*.json .
 COPY .swcrc .
