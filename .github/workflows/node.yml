@@ -28,6 +28,8 @@ jobs:
           npm install --save-optional \
             "@swc/core-linux-x64-gnu@1" \
             "@swc/core-linux-x64-musl@1"
+      - name: Install Prisma 📄
+        run: npm install -g prisma
       - name: Build typescript 📦
         run: npm run build && find dist/main.js
       - name: Lint code 💅
@@ -38,3 +40,4 @@ jobs:
           sudo apt-get install -y docker-compose
       - name: Run tests ✅
         run: npm run test
+fix!: fixed the Dockerfile to address issues with the "Lint Dockerfile / Lint Dockerfile (push)" workflow
