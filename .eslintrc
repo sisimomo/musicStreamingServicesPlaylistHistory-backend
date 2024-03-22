@@ -65,13 +65,11 @@
       }
     },
     {
-      "files": ["tests/**"],
+      "files": ["test-e2e/**"],
       "plugins": ["vitest"],
       "extends": ["plugin:vitest/recommended"],
       "rules": {
-        "@typescript-eslint/unbound-method": "off",
-        "vitest/expect-expect": "off",
-        "vitest/no-standalone-expect": "off"
+        "@typescript-eslint/unbound-method": "off"
       }
     }
   ],

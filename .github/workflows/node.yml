@@ -32,5 +32,9 @@ jobs:
         run: npm run build && find dist/main.js
       - name: Lint code 💅
         run: npm run lint
+      - name: Docker Compose 🐳
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
       - name: Run tests ✅
         run: npm run test
