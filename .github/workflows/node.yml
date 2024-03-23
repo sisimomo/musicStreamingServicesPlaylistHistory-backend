@@ -28,8 +28,6 @@ jobs:
           npm install --save-optional \
             "@swc/core-linux-x64-gnu@1" \
             "@swc/core-linux-x64-musl@1"
-      - name: Install Prisma 📄
-        run: npm install -g prisma
       - name: Build typescript 📦
         run: npm run build && find dist/main.js
       - name: Lint code 💅

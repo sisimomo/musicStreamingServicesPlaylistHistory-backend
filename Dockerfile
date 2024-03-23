@@ -18,6 +18,9 @@ COPY tsconfig*.json .
 COPY .swcrc .
 COPY nest-cli.json .
 COPY src src
+COPY prisma prisma
+
+RUN npx prisma generate
 
 EXPOSE $PORT
 CMD ["npm", "run", "dev"]
@@ -34,13 +37,13 @@ RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ".npmrc" && \
         "@swc/core-linux-x64-musl@1" && \
     rm -f .npmrc
 
-RUN npm install -g prisma@"^5" && \
-    prisma generate
-
 COPY tsconfig*.json .
 COPY .swcrc .
 COPY nest-cli.json .
 COPY src src
+COPY prisma prisma
+
+RUN npx prisma generate
 
 RUN npm run build && \
     npm prune --production
