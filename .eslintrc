@@ -12,6 +12,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:prettier/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
     "plugin:unicorn/recommended",
     "plugin:node/recommended"
   ],
@@ -28,8 +30,7 @@
       { "ignores": ["modules"] }
     ],
     "node/no-unpublished-import": "off",
-    "no-process-exit": "off",
-    "prettier/prettier": "warn"
+    "no-process-exit": "off"
   },
   "overrides": [
     {
@@ -46,11 +47,10 @@
               ["^\\u0000"],
               ["^node:"],
               ["^@?\\w"],
-              ["^@src(/.*|$)"],
-              ["^@core(/.*|$)"],
-              ["^@shared(/.*|$)"],
-              ["^@context(/.*|$)"],
-              ["^@tests(/.*|$)"],
+              ["^@core$"],
+              ["^@infrastructure$"],
+              ["^@resolver$"],
+              ["^@use-case$"],
               ["^"],
               ["^\\."]
             ]
@@ -65,15 +65,18 @@
       }
     },
     {
-      "files": ["test-e2e/**"],
-      "plugins": ["vitest"],
-      "extends": ["plugin:vitest/recommended"],
+      "files": ["test-e2e/**", "src/**/*.test.ts"],
+      "plugins": ["jest"],
       "rules": {
-        "@typescript-eslint/unbound-method": "off"
+        "@typescript-eslint/unbound-method": "off",
+        "jest/unbound-method": "error",
+        "jest/expect-expect": "off",
+        "jest/no-standalone-expect": "off"
       }
     }
   ],
   "env": {
-    "node": true
+    "node": true,
+    "jest": true
   }
 }

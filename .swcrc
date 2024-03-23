@@ -13,11 +13,11 @@
     },
     "baseUrl": "./",
     "paths": {
-      "@src/*": ["src/*"],
-      "@core/*": ["src/core/*"],
-      "@shared/*": ["src/shared/*"],
-      "@context/*": ["src/context/*"]
-      "@tests/*": ["tests/*"]
+      "@src": ["src/*"],
+      "@core": ["src/core"],
+      "@infrastructure": ["src/infrastructure"],
+      "@resolver": ["src/resolver"],
+      "@use-case": ["src/use-case"]
     },
     "target": "es2022"
   },

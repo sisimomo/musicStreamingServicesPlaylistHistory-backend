@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+
 import { ArtistUseCasesModule } from "@use-case";
 
 import { ArtistResolver } from "./artist.resolver";

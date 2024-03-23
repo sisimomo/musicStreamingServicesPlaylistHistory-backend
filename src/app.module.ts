@@ -1,8 +1,10 @@
-import { LoggerModule } from "@infrastructure";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+
+import { LoggerModule } from "@infrastructure";
+
 import { HealthModule, ResolverModule } from "@resolver";
 
 @Module({

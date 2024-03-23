@@ -1,8 +1,9 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { ArtistUseCases } from "@use-case";
 import { plainToClass } from "class-transformer";
 
 import { ArtistOutput, ArtistQueryArgs, ArtistsQueryArgs } from "@core";
+
+import { ArtistUseCases } from "@use-case";
 
 @Resolver(() => ArtistOutput)
 export class ArtistResolver {

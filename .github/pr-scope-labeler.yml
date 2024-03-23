@@ -3,15 +3,17 @@
   - changed-files:
       - any-glob-to-any-file:
           - src/**
+      - all-globs-to-all-files:
+          - '!src/**/*.test.ts'
 
 🧪 Tests:
   - changed-files:
       - any-glob-to-any-file:
-          - tests/**
-          - .env.test
+          - test-e2e/**
+          - src/**/*.test.ts
+          - .jest/**
           - scripts/calculate-global-test-coverage.ts
-          - vitest.config.**.ts
-          - create-vitest-test-config.ts
+          - jest.config.ts
           - nyc.config.js
 
 📝 Documentation:
@@ -26,6 +28,7 @@
       - any-glob-to-any-file:
           - .dockerignore
           - Dockerfile
+          - docker-compose.yml
           - .nvmrc
           - .swcrc
           - tsconfig.json
@@ -47,8 +50,7 @@
           - .swcrc
           - .yamllint.yml
           - .commitlint.config.js
-          - vitest.config.**.ts
-          - create-vitest-test-config.ts
+          - jest.config.ts
           - commitlint.config.ts
           - nest-cli.json
           - nyc.config.js
