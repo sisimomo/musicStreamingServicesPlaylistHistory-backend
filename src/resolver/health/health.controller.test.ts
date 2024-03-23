@@ -1,14 +1,14 @@
+import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { mock, MockProxy } from "vitest-mock-extended";
 
 import { HealthController } from "./health.controller";
 
 describe("HealthController", () => {
   let healthController: HealthController;
-  let logger: MockProxy<Logger>;
+  let logger: jest.Mocked<Logger>;
 
   beforeEach(() => {
-    logger = mock<Logger>();
+    logger = createMock<Logger>();
     healthController = new HealthController(logger);
   });
 

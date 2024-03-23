@@ -1,18 +1,14 @@
-import * as process from "node:process";
-
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
 import { Test, TestingModule } from "@nestjs/testing";
 import * as nock from "nock";
 import request from "supertest";
 
 import { AppModule } from "../src/app.module";
-import { dbContainer } from "./setup-tests.e2e";
 
 describe("Health", () => {
   let app: NestFastifyApplication;
 
   beforeAll(async () => {
-    process.env["DATABASE_URL"] = dbContainer.getConnectionUri();
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();

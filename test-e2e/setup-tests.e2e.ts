@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import process from "node:process";
 
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from "@testcontainers/postgresql";
 import postgres from "postgres";
@@ -27,12 +28,12 @@ const runMigrationScripts = async (dbContainer: StartedPostgreSqlContainer): Pro
 
 let dbContainer: StartedPostgreSqlContainer;
 
-beforeAll(async () => {
+export const startAndInitializeDbContainer = async (): Promise<void> => {
   dbContainer = await new PostgreSqlContainer().start();
   await runMigrationScripts(dbContainer);
-});
-afterAll(async () => {
-  await dbContainer.stop();
-});
+  process.env["DATABASE_URL"] = dbContainer.getConnectionUri();
+};
 
-export { dbContainer };
+export const stopDbContainer = async (): Promise<void> => {
+  await dbContainer.stop();
+};

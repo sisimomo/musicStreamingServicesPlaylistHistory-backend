@@ -17,9 +17,12 @@
       "@core": ["src/core"],
       "@infrastructure": ["src/infrastructure"],
       "@resolver": ["src/resolver"],
-      "@use-case": ["src/use-case"],
+      "@use-case": ["src/use-case"]
     },
-    "types": ["vitest/globals"]
+    "types": ["jest"]
+  },
+  "ts-node": {
+    "swc": true
   },
   "exclude": ["node_modules", "dist"]
 }
