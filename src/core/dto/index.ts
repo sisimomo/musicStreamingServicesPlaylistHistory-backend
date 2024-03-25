@@ -1,3 +1,3 @@
-export * from "./args/artist.query.args";
-export * from "./args/artists.query.args";
-export * from "./output/artist.output";
+export * from "./args";
+export * from "./guid-transformers";
+export * from "./output";

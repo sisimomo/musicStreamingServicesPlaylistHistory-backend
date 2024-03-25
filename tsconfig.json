@@ -21,8 +21,5 @@
     },
     "types": ["jest"]
   },
-  "ts-node": {
-    "swc": true
-  },
   "exclude": ["node_modules", "dist"]
 }

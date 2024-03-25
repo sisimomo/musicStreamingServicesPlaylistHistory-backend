@@ -1,9 +1,13 @@
-export interface Repository<Entity, CreateEntity, UpdateEntity> {
-  findAllWithPagination(skip: number, take: number): Promise<Entity[]>;
+export interface SelectScalar {
+  [key: string]: boolean;
+}
 
-  findById(id: number): Promise<Entity>;
+export interface Repository<Entity, ID, CreateInput, UpdateInput> {
+  findAllPaginated(select: SelectScalar, skip: number, take: number): Promise<Entity[]>;
 
-  create(entity: CreateEntity): Promise<Entity>;
+  findById(select: SelectScalar, id: ID): Promise<Entity>;
 
-  update(id: number, entity: UpdateEntity): Promise<Entity>;
+  create(createInput: CreateInput): Promise<Entity>;
+
+  update(id: ID, updateInput: UpdateInput): Promise<Entity>;
 }

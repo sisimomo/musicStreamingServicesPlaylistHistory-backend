@@ -12,7 +12,7 @@ export class InvalidTypename extends Error {
   }
 }
 
-export const toGlobalId = (typename: string, id: number): string => {
+export const toGlobalId = (typename: string, id: number | string): string => {
   return Buffer.from(`${typename}:${id}`).toString("base64");
 };
 

@@ -10,27 +10,56 @@ import { PrismaService } from "../prisma.service";
 export class PrismaArtistRepository implements ArtistRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public findAllWithPagination(skip: number, take: number): Promise<Artist[]> {
+  public findAllPaginated(select: Prisma.ArtistSelectScalar, skip: number, take: number): Promise<Artist[]> {
     return this.prismaService.artist.findMany({
+      select: {
+        id: true,
+        ...select,
+      },
       skip: skip,
       take: take,
     });
   }
-  public findById(id: number): Promise<Artist> {
+  public async findAllBySongIdPaginated(
+    select: Prisma.ArtistSelectScalar,
+    songId: number,
+    skip: number,
+    take: number,
+  ): Promise<Artist[]> {
+    const artists = await this.prismaService.song
+      .findUnique({
+        select: {},
+        where: { id: songId || undefined },
+      })
+      .artists({
+        select: {
+          id: true,
+          ...select,
+        },
+        skip: skip,
+        take: take,
+      });
+    return artists === null ? [] : artists;
+  }
+  public findById(select: Prisma.ArtistSelectScalar, id: number): Promise<Artist> {
     return this.prismaService.artist.findUniqueOrThrow({
+      select: {
+        id: true,
+        ...select,
+      },
       where: {
         id,
       },
     });
   }
-  public create(entity: Prisma.ArtistCreateInput): Promise<Artist> {
+  public create(createInput: Prisma.ArtistCreateInput): Promise<Artist> {
     return this.prismaService.artist.create({
-      data: entity,
+      data: createInput,
     });
   }
-  public update(id: number, entity: Prisma.ArtistUpdateInput): Promise<Artist> {
+  public update(id: number, updateInput: Prisma.ArtistUpdateInput): Promise<Artist> {
     return this.prismaService.artist.update({
-      data: entity,
+      data: updateInput,
       where: {
         id,
       },

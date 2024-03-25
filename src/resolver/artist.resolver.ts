@@ -1,22 +1,42 @@
-import { Args, Query, Resolver } from "@nestjs/graphql";
-import { plainToClass } from "class-transformer";
+import { Args, Parent, ResolveProperty, Resolver } from "@nestjs/graphql";
+import { Artist as ArtistEntity } from "@prisma/client";
 
-import { ArtistOutput, ArtistQueryArgs, ArtistsQueryArgs } from "@core";
+import { Artist, ArtistPage, globalIdToTableId, PageQueryArgs, SelectScalar, Song, SongPage } from "@core";
 
-import { ArtistUseCases } from "@use-case";
+import { ArtistUseCase, SongUseCase } from "@use-case";
 
-@Resolver(() => ArtistOutput)
-export class ArtistResolver {
-  constructor(private readonly service: ArtistUseCases) {}
+import { ArtistIdQueryArgs } from "../core/dto/args/artist.id.query.args";
+import { BaseResolver } from "./base.resolver";
+import { ExtractSelect } from "./extract-select.decorator";
+import { ArtistEntityConverterService } from "./page-converter/artist-entity-converter.service";
+import { SongEntityConverterService } from "./page-converter/song-entity-converter.service";
 
-  @Query(() => ArtistOutput)
-  async artist(@Args() args: ArtistQueryArgs): Promise<ArtistOutput> {
-    return plainToClass(ArtistOutput, await this.service.find(plainToClass(ArtistQueryArgs, args)));
+@Resolver(() => Artist)
+export class ArtistResolver extends BaseResolver<ArtistEntity, ArtistIdQueryArgs, Artist, ArtistPage>(
+  Artist,
+  ArtistIdQueryArgs,
+  ArtistPage,
+) {
+  constructor(
+    artistUseCases: ArtistUseCase,
+    artistEntityConverterService: ArtistEntityConverterService,
+    private readonly songUseCases: SongUseCase,
+    private readonly songEntityConverterService: SongEntityConverterService,
+  ) {
+    super(artistUseCases, artistEntityConverterService);
   }
 
-  @Query(() => [ArtistOutput])
-  async artists(@Args() args: ArtistsQueryArgs): Promise<ArtistOutput[]> {
-    const entities = await this.service.findAllWithPagination(args);
-    return entities.map(entity => plainToClass(ArtistOutput, entity));
+  @ResolveProperty("songs", () => SongPage)
+  public async resolveSongs(
+    @Parent() parent: Artist,
+    @Args() args: PageQueryArgs,
+    @ExtractSelect({ field: "items", itemClassRef: Song }) select: SelectScalar,
+  ): Promise<SongPage> {
+    const entities = await this.songUseCases.findAllByArtistIdPaginated(
+      select,
+      globalIdToTableId(parent.id, Artist.name),
+      args,
+    );
+    return this.songEntityConverterService.toPage(entities, args);
   }
 }

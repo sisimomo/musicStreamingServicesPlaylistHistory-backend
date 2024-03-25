@@ -1,13 +1,13 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { ToGlobalId } from "../decorator/to-global-id";
+import { ArtistPage } from "./paginated";
+import { StreamingServiceItem } from "./streaming-service-item";
 
-@ObjectType(ArtistOutput.__typename)
-export class ArtistOutput {
-  static __typename: string = "Artist";
-
+@ObjectType()
+export class Song extends StreamingServiceItem {
   @Field(() => ID)
-  @ToGlobalId(ArtistOutput.__typename)
+  @ToGlobalId(Song.name)
   id!: string;
 
   @Field()
@@ -19,9 +19,6 @@ export class ArtistOutput {
   @Field({ nullable: true })
   artworkUrl?: string;
 
-  @Field(() => String)
-  streamingService!: string;
-
-  @Field()
-  streamingServiceInternalId!: string;
+  @Field(() => ArtistPage)
+  artists!: ArtistPage;
 }

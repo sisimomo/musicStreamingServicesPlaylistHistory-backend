@@ -23,12 +23,12 @@ export const createJestTestConfig = (testingType: string): Config => {
     clearMocks: true,
     modulePaths: [compilerOptions.baseUrl],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+    globalSetup: "<rootDir>test-e2e/global.setup.ts",
+    globalTeardown: "<rootDir>test-e2e/global.teardown.ts",
     testMatch: ["<rootDir>/src/**/*.test.ts"],
   };
   if (testingType === "e2e") {
     config.testMatch = ["<rootDir>/test-e2e/**/*.test.ts"];
-    config.globalSetup = "<rootDir>test-e2e/global.setup.ts";
-    config.globalTeardown = "<rootDir>test-e2e/global.teardown.ts";
   }
   return config;
 };

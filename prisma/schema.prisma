@@ -9,14 +9,28 @@ datasource db {
 
 model Artist {
   id                          Int               @map("id") @id @default(autoincrement())
-  streamingService            streaming_service @map("streaming_service")
-  streamingServiceInternalId  String            @map("streaming_service_internal_id")
   createdAt                   DateTime          @map("created_at") @default(now())
   updatedAt                   DateTime          @map("updated_at") @updatedAt @default(now())
-  name                        String            @map("name") @db.VarChar(256)
+  streamingService            streaming_service @map("streaming_service")
+  streamingServiceInternalId  String            @map("streaming_service_internal_id") @db.VarChar(255)
+  name                        String            @map("name") @db.VarChar(255)
   url                         String?           @map("url") @db.VarChar(2048)
   artworkUrl                  String?           @map("artwork_url") @db.VarChar(2048)
+  songs                       Song[]
   @@map("artist")
+}
+
+model Song {
+  id                          Int               @map("id") @id @default(autoincrement())
+  createdAt                   DateTime          @map("created_at") @default(now())
+  updatedAt                   DateTime          @map("updated_at") @updatedAt @default(now())
+  streamingService            streaming_service @map("streaming_service")
+  streamingServiceInternalId  String            @map("streaming_service_internal_id") @db.VarChar(255)
+  name                        String            @map("name") @db.VarChar(255)
+  url                         String?           @map("url") @db.VarChar(2048)
+  artworkUrl                  String?           @map("artwork_url") @db.VarChar(2048)
+  artists                     Artist[]
+  @@map("song")
 }
 
 enum streaming_service {

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { PrismaArtistRepository, PrismaService } from "./prisma";
+import { PrismaArtistRepository, PrismaService, PrismaSongRepository } from "./prisma";
 
 @Module({
   providers: [
@@ -11,7 +11,11 @@ import { PrismaArtistRepository, PrismaService } from "./prisma";
       provide: "ArtistRepository",
       useClass: PrismaArtistRepository,
     },
+    {
+      provide: "SongRepository",
+      useClass: PrismaSongRepository,
+    },
   ],
-  exports: ["ArtistRepository"],
+  exports: ["ArtistRepository", "SongRepository"],
 })
 export class DatabaseModule {}

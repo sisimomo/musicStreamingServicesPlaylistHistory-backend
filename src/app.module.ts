@@ -27,4 +27,4 @@ export class AppModule {}
 
 // TODO ADD:
 //  - Rate limiting
-//  - Nesting pagination inside GraphQL
+//  - Query complexity calculator

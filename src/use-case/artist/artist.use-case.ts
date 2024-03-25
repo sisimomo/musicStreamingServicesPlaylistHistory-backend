@@ -1,17 +1,30 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Artist } from "@prisma/client";
+import { Artist, Prisma } from "@prisma/client";
 
-import { ArtistQueryArgs, ArtistRepository, ArtistsQueryArgs } from "@core";
+import { ArtistRepository, PageQueryArgs } from "@core";
+
+import { BaseUseCase } from "../base.use-case";
 
 @Injectable()
-export class ArtistUseCases {
+export class ArtistUseCase implements BaseUseCase<Artist, number> {
   constructor(@Inject("ArtistRepository") private repository: ArtistRepository) {}
 
-  public async find(getArtistArgs: ArtistQueryArgs): Promise<Artist> {
-    return this.repository.findById(getArtistArgs.internalId);
+  public async findById(select: Prisma.ArtistSelectScalar, id: number): Promise<Artist> {
+    return this.repository.findById(select, id);
   }
 
-  public async findAllWithPagination(getArtistsArgs: ArtistsQueryArgs): Promise<Artist[]> {
-    return this.repository.findAllWithPagination(getArtistsArgs.skip, getArtistsArgs.take);
+  public async findAllWithPagination(
+    select: Prisma.ArtistSelectScalar,
+    getArtistsArgs: PageQueryArgs,
+  ): Promise<Artist[]> {
+    return this.repository.findAllPaginated(select, getArtistsArgs.skip, getArtistsArgs.take);
+  }
+
+  public async findAllBySongIdPaginated(
+    select: Prisma.ArtistSelectScalar,
+    artistId: number,
+    pageQueryArgs: PageQueryArgs,
+  ): Promise<Artist[]> {
+    return this.repository.findAllBySongIdPaginated(select, artistId, pageQueryArgs.skip, pageQueryArgs.take);
   }
 }
