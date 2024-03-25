@@ -1,10 +1,11 @@
 ---
 💻 Source:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/**
-      - all-globs-to-all-files:
-          - '!src/**/*.test.ts'
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              - src/**
+          - all-globs-to-all-files:
+              - '!src/**/*.test.ts'
 
 🧪 Tests:
   - changed-files:
