@@ -25,7 +25,7 @@
   "dependencies": {
     "@apollo/server": "^4.10.2",
     "@as-integrations/fastify": "^2.1.1",
-    "@golevelup/ts-jest": "^0.4.0",
+    "@golevelup/ts-jest": "^0.5.0",
     "@nestjs/apollo": "^12.1.0",
     "@nestjs/cli": "^10.3.2",
     "@nestjs/common": "^10.3.7",
