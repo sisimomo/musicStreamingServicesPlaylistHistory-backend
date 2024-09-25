@@ -52,7 +52,7 @@
     "@swc/jest": "^0.2.36",
     "@testcontainers/postgresql": "^10.13.1",
     "@types/fs-extra": "^11.0.4",
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.13",
     "@types/node": "^20.14.12",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^7.16.1",
